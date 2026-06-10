@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados</title>
+    <script>
+        window.onload = inicio;
+
+        function inicio() {
+            let botao = document.getElementById('botao');
+            botao.addEventListener('click', envia);
+        }
+
+        function envia() {
+            let saida = document.getElementById('saida');
+            let valor = document.getElementById('valor_real').value;
+            
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function () {
+                let objetoRecebido = JSON.parse(this.responseText);
+                console.log(objetoRecebido);
+                saida.innerHTML = objetoRecebido.valor_convertido;
+            }
+            xhttp.open("GET", `converte.php?valor_reais=${valor}`, true);
+            xhttp.send();
+        }
+    </script>
+</head>
+
+<body>
+    <label for="">Digite o valor em Reais:</label>
+    <input type="number" id="valor_real"><br>
+
+    <button id="botao">Converter</button>
+    <p id="saida"></p>
+</body>
+
+</html>
